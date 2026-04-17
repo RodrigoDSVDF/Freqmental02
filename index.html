@@ -322,6 +322,40 @@
             position: relative;
             z-index: 2;
         }
+
+        /* ===== EFEITOS DOURADOS ===== */
+        .golden-guarantee {
+            background: linear-gradient(145deg, #F5E7A3 0%, #E2C068 40%, #C9A23D 70%, #B8862D 100%);
+            color: #1F1F1F;
+            box-shadow: 0 10px 30px rgba(184, 134, 45, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.3);
+            border: 2px solid #FFD700;
+            transition: all 0.3s ease;
+        }
+        .golden-guarantee:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 40px rgba(184, 134, 45, 0.7), 0 0 0 4px rgba(255, 215, 0, 0.4);
+        }
+
+        .golden-button {
+            background: linear-gradient(145deg, #F5E7A3 0%, #E2C068 40%, #C9A23D 70%, #B8862D 100%);
+            color: #1F1F1F !important;
+            border: 2px solid #FFD700 !important;
+            box-shadow: 0 15px 30px rgba(184, 134, 45, 0.4), 0 0 0 2px rgba(255, 215, 0, 0.2) !important;
+            text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
+            font-weight: 800;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .golden-button:hover {
+            background: linear-gradient(145deg, #FFEFB5 0%, #F5D980 40%, #E2C068 70%, #D4A94A 100%);
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 25px 40px rgba(184, 134, 45, 0.6), 0 0 0 4px rgba(255, 215, 0, 0.3) !important;
+            color: #000 !important;
+            border-color: #FFD700 !important;
+        }
+        /* Para garantir que o texto fique legível no botão dourado */
+        .golden-button span, .golden-button {
+            color: #1F1F1F;
+        }
     </style>
 </head>
 <body class="antialiased no-x-overflow">
@@ -551,7 +585,8 @@
                 <div class="image-box h-[420px] sm:h-[520px] md:h-[650px] w-full transform -rotate-1 shadow-2xl float-slow" style="animation-duration: 8s;">
                     <img src="./mockup-principal.png" alt="E-book Frequência Mental Poderosa">
                 </div>
-                <div class="absolute -bottom-8 -right-4 md:-bottom-10 md:-right-6 bg-[#D6CFA1] text-black w-32 h-32 md:w-36 md:h-36 rounded-full flex flex-col items-center justify-center shadow-2xl border-4 md:border-8 border-black z-10 float-medium" style="animation-delay:-1.5s;">
+                <!-- SELO DOURADO "7 DIAS DE GARANTIA" -->
+                <div class="absolute -bottom-8 -right-4 md:-bottom-10 md:-right-6 w-32 h-32 md:w-36 md:h-36 rounded-full flex flex-col items-center justify-center shadow-2xl border-4 md:border-8 border-black z-10 float-medium golden-guarantee" style="animation-delay:-1.5s;">
                     <span class="text-3xl md:text-4xl font-bold serif leading-none">7</span>
                     <span class="text-[8px] md:text-[9px] uppercase font-bold tracking-widest text-center mt-1">Dias de <br> Garantia</span>
                 </div>
@@ -563,7 +598,8 @@
                     O mapa definitivo para a sua transformação pessoal. Saia da apatia e desperte a autoridade natural que sempre esteve aí.
                 </p>
                 <div class="space-y-6 reveal-up delay-300">
-                    <a href="https://freqmentalchat.nexus-manual.com.br" target="_blank" rel="noopener noreferrer" class="w-full py-6 md:py-8 bg-[#D6CFA1] text-black rounded-full font-bold text-lg md:text-xl uppercase tracking-widest hover:scale-105 transition-all shadow-2xl text-center btn-block btn-link">
+                    <!-- BOTÃO DOURADO "DESPERTAR MEU POTENCIAL" -->
+                    <a href="https://freqmentalchat.nexus-manual.com.br" target="_blank" rel="noopener noreferrer" class="w-full py-6 md:py-8 rounded-full font-bold text-lg md:text-xl uppercase tracking-widest transition-all shadow-2xl text-center btn-block btn-link golden-button">
                         Despertar Meu Potencial
                     </a>
                     <p class="text-center text-[9px] md:text-[10px] opacity-50 uppercase tracking-[0.3em]">
