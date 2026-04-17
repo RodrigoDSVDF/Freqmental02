@@ -38,7 +38,6 @@
             height: auto;
             object-fit: contain;
             
-            /* MÁSCARA RADIAL: centro opaco, bordas transparentes (fade em todas as direções) */
             mask-image: radial-gradient(
                 ellipse 70% 60% at 50% 40%,
                 rgba(0, 0, 0, 1) 30%,
@@ -51,10 +50,8 @@
                 rgba(0, 0, 0, 0.7) 60%,
                 transparent 100%
             );
-            
-            opacity: 1; /* fallback */
+            opacity: 1;
         }
-        /* Pseudo-elemento para suavizar ainda mais a transição na base (opcional) */
         .top-banner-container::after {
             content: "";
             position: absolute;
@@ -95,6 +92,11 @@
             object-fit: cover;
             display: block;
             will-change: transform;
+            transition: transform 0.6s cubic-bezier(0.2, 0.9, 0.3, 1);
+        }
+        /* Zoom suave na imagem ao passar o mouse sobre o box */
+        .image-box:hover img {
+            transform: scale(1.02);
         }
         @media (max-width: 768px) {
             .image-box { min-height: 280px; max-height: 440px; }
@@ -122,7 +124,7 @@
             .step-number { font-size: 3rem; top: -0.5rem; left: 0.75rem; }
         }
 
-        /* ======= ENTRADA PRINCIPAL: FADE + VERTICAL ======= */
+        /* ======= ENTRADAS ======= */
         .reveal-up {
             opacity: 0;
             transform: translateY(30px);
@@ -130,7 +132,6 @@
         }
         .reveal-up.visible { opacity: 1; transform: translateY(0); }
 
-        /* ENTRADA DA ESQUERDA */
         .reveal-left {
             opacity: 0;
             transform: translateX(-40px);
@@ -138,7 +139,6 @@
         }
         .reveal-left.visible { opacity: 1; transform: translateX(0); }
 
-        /* ENTRADA DA DIREITA */
         .reveal-right {
             opacity: 0;
             transform: translateX(40px);
@@ -146,7 +146,6 @@
         }
         .reveal-right.visible { opacity: 1; transform: translateX(0); }
 
-        /* ENTRADA DIAGONAL */
         .reveal-diag-left {
             opacity: 0;
             transform: translateX(-30px) translateY(20px);
@@ -161,7 +160,6 @@
         }
         .reveal-diag-right.visible { opacity: 1; transform: translateX(0) translateY(0); }
 
-        /* SCALE REVEAL */
         .reveal-scale {
             opacity: 0;
             transform: scale(0.95) translateY(16px);
@@ -169,25 +167,27 @@
         }
         .reveal-scale.visible { opacity: 1; transform: scale(1) translateY(0); }
 
-        /* DELAYS */
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
         .delay-300 { transition-delay: 0.3s; }
         .delay-400 { transition-delay: 0.4s; }
         .delay-500 { transition-delay: 0.5s; }
 
-        /* PARALLAX IMAGENS — via JS (apenas para as .parallax-img restantes) */
+        /* PARALLAX IMAGENS */
         .parallax-img { will-change: transform; }
 
-        /* FLOATING ELEMENTS */
+        /* FLOATING ELEMENTS - AGORA COM BACKDROP BLUR */
         .float-slow {
             animation: floatSlow 7s ease-in-out infinite;
+            backdrop-filter: blur(10px);
         }
         .float-medium {
             animation: floatMedium 5s ease-in-out infinite;
+            backdrop-filter: blur(10px);
         }
         .float-orbit {
             animation: orbit 9s ease-in-out infinite;
+            backdrop-filter: blur(10px);
         }
         @keyframes floatSlow {
             0%   { transform: translateY(0px) translateX(0px); }
@@ -211,7 +211,12 @@
         /* SCROLL-DRIVEN HORIZONTAL (cards) */
         .scroll-slide { will-change: transform; }
 
-        /* MARQUEE horizontal */
+        /* MARQUEE horizontal - COM MÁSCARA NAS BORDAS */
+        .marquee-wrapper {
+            overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+        }
         .marquee-track {
             display: flex;
             gap: 4rem;
@@ -223,14 +228,14 @@
             to   { transform: translateX(-50%); }
         }
 
-        /* BOTÃO MOBILE */
+        /* BOTÃO MOBILE CTA - COM MARGEM REDUZIDA */
         .chaos-button-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 1rem;   /* mais próximo do banner */
             margin-bottom: 2rem;
             width: 100%;
         }
@@ -290,31 +295,25 @@
         .btn-block { display: block; width: 100%; }
         .no-x-overflow { overflow-x: hidden; }
 
-        /* DECORATIVE LINE */
-        .deco-line {
-            position: absolute;
-            width: 1px;
-            background: linear-gradient(to bottom, transparent, rgba(31,31,31,0.15), transparent);
-            pointer-events: none;
-        }
-
-        /* HOVER TILT nos cards */
+        /* HOVER TILT nos cards - agora com borda dourada sutil */
         .tilt-card {
-            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.4s ease, border-color 0.3s;
+            border: 1px solid transparent;
         }
         .tilt-card:hover {
             transform: translateY(-4px) rotate(0.3deg);
             box-shadow: 0 36px 60px rgba(0,0,0,0.14);
+            border-color: rgba(214, 207, 161, 0.25);
         }
 
-        /* Overlay escuro para contraste do texto no hero com background */
+        /* Hero overlay melhorado (gradiente direcional) */
         .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.55);
+            background: linear-gradient(45deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 100%);
             pointer-events: none;
             z-index: 1;
         }
@@ -332,8 +331,13 @@
             transition: all 0.3s ease;
         }
         .golden-guarantee:hover {
+            animation: softPulse 2s infinite;
             transform: scale(1.02);
-            box-shadow: 0 15px 40px rgba(184, 134, 45, 0.7), 0 0 0 4px rgba(255, 215, 0, 0.4);
+        }
+        @keyframes softPulse {
+            0% { box-shadow: 0 10px 30px rgba(184, 134, 45, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 15px 40px rgba(184, 134, 45, 0.7), 0 0 0 6px rgba(255, 215, 0, 0.2); }
+            100% { box-shadow: 0 10px 30px rgba(184, 134, 45, 0.5), 0 0 0 2px rgba(255, 215, 0, 0.3); }
         }
 
         .golden-button {
@@ -352,9 +356,28 @@
             color: #000 !important;
             border-color: #FFD700 !important;
         }
-        /* Para garantir que o texto fique legível no botão dourado */
-        .golden-button span, .golden-button {
-            color: #1F1F1F;
+
+        /* SEPARADOR SUTIL ENTRE SEÇÕES */
+        .section-separator {
+            border-top: 1px solid rgba(31, 31, 31, 0.08);
+        }
+        /* Aplicamos em seções específicas via classe no HTML */
+        #golem {
+            border-top: 1px solid rgba(214,207,161,0.15);
+        }
+        #filosofia {
+            border-top: 1px solid rgba(31, 31, 31, 0.06);
+        }
+
+        /* FOOTER COM ÍCONE DE SEGURANÇA */
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            opacity: 0.6;
+            font-size: 0.7rem;
+            letter-spacing: 0.2em;
         }
     </style>
 </head>
@@ -365,7 +388,7 @@
         <img src="arco.png" alt="Arco - Frequência Mental">
     </div>
 
-    <!-- MOBILE CTA -->
+    <!-- MOBILE CTA (agora mais próximo do banner) -->
     <div class="chaos-button-wrapper">
         <a href="https://freqmentalchat.nexus-manual.com.br" target="_blank" rel="noopener noreferrer" class="chaos-button" id="mobileChaosBtn">
             O DESPERTAR
@@ -378,15 +401,13 @@
 
     <!-- 1. HERO com imagem de fundo (hero-leao.jpg) -->
     <header class="min-h-screen flex items-center px-5 md:px-6 py-12 relative overflow-hidden bg-cover bg-center bg-no-repeat" style="background-image: url('./hero-leao.jpg');">
-        <!-- Overlay escuro para melhor contraste do texto -->
         <div class="hero-overlay"></div>
-        <!-- Blobs flutuantes (mantidos para efeito, mas com z-index ajustado) -->
+        <!-- Blobs flutuantes com blur -->
         <div class="absolute top-16 right-8 w-48 h-48 bg-black/6 rounded-full blur-3xl float-slow pointer-events-none" style="z-index: 1;"></div>
         <div class="absolute bottom-24 left-4 w-32 h-32 bg-black/5 rounded-full blur-2xl float-medium pointer-events-none" style="animation-delay: -2s; z-index: 1;"></div>
         <div class="absolute top-1/2 left-1/3 w-24 h-24 bg-white/15 rounded-full blur-xl float-orbit pointer-events-none" style="animation-delay: -4s; z-index: 1;"></div>
 
         <div class="max-w-7xl mx-auto w-full hero-content">
-            <!-- Conteúdo em grid de 1 coluna (antes era 2 colunas, agora removemos a imagem) -->
             <div class="max-w-2xl text-white space-y-7">
                 <div class="text-2xl md:text-3xl font-bold tracking-tighter serif italic opacity-90 reveal-up">Frequência Mental.</div>
                 <h1 class="text-5xl sm:text-6xl md:text-8xl font-light serif leading-[1.1] tracking-tight reveal-up delay-100">
@@ -404,8 +425,8 @@
         </div>
     </header>
 
-    <!-- MARQUEE SEPARADOR -->
-    <div class="py-6 bg-[#1F1F1F] text-[#D6CFA1] overflow-hidden">
+    <!-- MARQUEE SEPARADOR com máscara nas bordas -->
+    <div class="py-6 bg-[#1F1F1F] text-[#D6CFA1] overflow-hidden marquee-wrapper">
         <div class="marquee-track text-xs uppercase tracking-[0.4em] opacity-60 select-none">
             <span>Frequência Mental Poderosa</span>
             <span>✦</span>
@@ -434,7 +455,7 @@
         </div>
     </div>
 
-    <!-- 2. EFEITO GOLEM -->
+    <!-- 2. EFEITO GOLEM (com borda superior sutil) -->
     <section id="golem" class="px-5 md:px-6 bg-[#2D2D2D] text-[#D6CFA1]" data-scroll>
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             <div class="image-box h-[380px] sm:h-[450px] md:h-[550px] w-full md:order-1 order-2 reveal-diag-left tilt-card">
@@ -473,7 +494,7 @@
         </div>
     </section>
 
-    <!-- 4. FILOSOFIA E CONSCIÊNCIA -->
+    <!-- 4. FILOSOFIA E CONSCIÊNCIA (com separador sutil) -->
     <section id="filosofia" class="px-5 md:px-6" data-scroll>
         <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 md:gap-20 items-center">
             <div class="image-box h-[420px] sm:h-[480px] md:h-[600px] w-full md:order-1 order-2 reveal-diag-left tilt-card">
@@ -585,7 +606,7 @@
                 <div class="image-box h-[420px] sm:h-[520px] md:h-[650px] w-full transform -rotate-1 shadow-2xl float-slow" style="animation-duration: 8s;">
                     <img src="./mockup-principal.png" alt="E-book Frequência Mental Poderosa">
                 </div>
-                <!-- SELO DOURADO "7 DIAS DE GARANTIA" -->
+                <!-- SELO DOURADO COM PULSAÇÃO -->
                 <div class="absolute -bottom-8 -right-4 md:-bottom-10 md:-right-6 w-32 h-32 md:w-36 md:h-36 rounded-full flex flex-col items-center justify-center shadow-2xl border-4 md:border-8 border-black z-10 float-medium golden-guarantee" style="animation-delay:-1.5s;">
                     <span class="text-3xl md:text-4xl font-bold serif leading-none">7</span>
                     <span class="text-[8px] md:text-[9px] uppercase font-bold tracking-widest text-center mt-1">Dias de <br> Garantia</span>
@@ -598,13 +619,17 @@
                     O mapa definitivo para a sua transformação pessoal. Saia da apatia e desperte a autoridade natural que sempre esteve aí.
                 </p>
                 <div class="space-y-6 reveal-up delay-300">
-                    <!-- BOTÃO DOURADO "DESPERTAR MEU POTENCIAL" -->
                     <a href="https://freqmentalchat.nexus-manual.com.br" target="_blank" rel="noopener noreferrer" class="w-full py-6 md:py-8 rounded-full font-bold text-lg md:text-xl uppercase tracking-widest transition-all shadow-2xl text-center btn-block btn-link golden-button">
                         Despertar Meu Potencial
                     </a>
                     <p class="text-center text-[9px] md:text-[10px] opacity-50 uppercase tracking-[0.3em]">
                         Risco Zero • Acesso Vitalício • Purificação Mental
                     </p>
+                    <!-- Ícone de segurança sutil no footer -->
+                    <div class="security-badge">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L3 7v7c0 6 9 10 9 10s9-4 9-10V7l-9-5z"/></svg>
+                        <span>PAGAMENTO 100% SEGURO</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -618,7 +643,6 @@
 
     <script>
     (function() {
-        /* ---- OVERFLOW X ---- */
         function fixH() {
             document.body.style.overflowX = 'hidden';
             document.documentElement.style.overflowX = 'hidden';
@@ -628,7 +652,7 @@
 
         const isMobile = 'ontouchstart' in window;
 
-        /* ---- INTERSECTION OBSERVER PARA TODAS AS ENTRADAS ---- */
+        /* INTERSECTION OBSERVER */
         const revealClasses = [
             '.reveal-up', '.reveal-left', '.reveal-right',
             '.reveal-diag-left', '.reveal-diag-right', '.reveal-scale'
@@ -644,7 +668,7 @@
         }, { threshold: 0.12, rootMargin: "0px 0px -30px 0px" });
         revealEls.forEach(el => revealObserver.observe(el));
 
-        /* ---- PARALLAX VERTICAL NAS IMAGENS (restantes) ---- */
+        /* PARALLAX VERTICAL */
         if (!isMobile) {
             const parallaxImages = document.querySelectorAll('.parallax-img');
             function updateParallax() {
@@ -663,7 +687,7 @@
             updateParallax();
         }
 
-        /* ---- PARALLAX HORIZONTAL NOS CARDS DOS 3 PILARES ---- */
+        /* PARALLAX HORIZONTAL CARDS */
         if (!isMobile) {
             const cards = document.querySelectorAll('.scroll-slide');
             const offsets = [-14, 0, 14];
@@ -682,7 +706,7 @@
             updateCards();
         }
 
-        /* ---- SCROLL RÁPIDO PARALAX NOS BLOBS DO HERO ---- */
+        /* BLOBS PARALLAX */
         if (!isMobile) {
             const blobs = document.querySelectorAll('.float-slow, .float-medium, .float-orbit');
             window.addEventListener('scroll', () => {
@@ -694,7 +718,7 @@
             }, { passive: true });
         }
 
-        /* ---- SUAVE ANCHOR LINKS ---- */
+        /* ANCHOR LINKS */
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const id = this.getAttribute('href');
@@ -707,7 +731,7 @@
             });
         });
 
-        /* ---- MAGNETIC HOVER NOS BOTÕES (desktop) ---- */
+        /* MAGNETIC HOVER */
         if (!isMobile) {
             document.querySelectorAll('a[href*="freqmentalchat"], a[href*="pdf"]').forEach(btn => {
                 btn.addEventListener('mousemove', (e) => {
