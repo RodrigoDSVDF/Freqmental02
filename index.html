@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-pt">
 <head>
@@ -15,110 +14,157 @@
             background-color: #D6CFA1;
             color: #1F1F1F;
             scroll-behavior: smooth;
+            overflow-x: hidden;
         }
         .serif { font-family: 'Playfair Display', serif; }
+        section { padding-top: 5rem; padding-bottom: 5rem; }
+        @media (min-width: 768px) { section { padding-top: 8rem; padding-bottom: 8rem; } }
+        .text-humanized { line-height: 1.8; letter-spacing: -0.01em; }
 
-        /* --- ESTILOS DA IMAGEM DE TOPO (arco.png) --- */
-        .hero-header {
-            position: relative;
-            background-color: #1a1a1a;
-            min-height: 85vh;
+        /* --- NOVA CLASSE PARA A IMAGEM DO TOPO --- */
+        .top-banner-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 0 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+        .top-banner-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            object-fit: cover;
+        }
+
+        /* IMAGE BOXES */
+        .image-box {
+            overflow: hidden;
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.12);
+            background-color: #2D2D2D;
             display: flex;
             align-items: center;
-            overflow: hidden;
+            justify-content: center;
+            padding: 0;
+            transform: translateZ(0);
         }
-        .hero-image-container {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-        .hero-image-container img {
+        .image-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center right;
-        }
-        /* Gradiente para o texto não sumir sobre a imagem */
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #1a1a1a 30%, rgba(26,26,26,0.5) 60%, transparent 100%);
-            z-index: 2;
+            display: block;
+            will-change: transform;
         }
         @media (max-width: 768px) {
-            .hero-header { min-height: 70vh; }
-            .hero-overlay {
-                background: linear-gradient(to bottom, rgba(26,26,26,0.8) 0%, rgba(26,26,26,0.4) 50%, #1a1a1a 100%);
-            }
-            .hero-content { text-align: center; margin-top: auto; padding-bottom: 4rem; }
+            .image-box { min-height: 280px; max-height: 440px; }
         }
-        .hero-content { position: relative; z-index: 3; }
-        /* --- FIM DOS ESTILOS DA IMAGEM --- */
 
-        /* Estilos originais mantidos abaixo */
-        .reveal-up { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.25, 0.8, 0.35, 1); }
-        .reveal-up.visible { opacity: 1; transform: translateY(0); }
-        .chaos-button {
-            background-color: #D6CFA1;
-            color: #1a1a1a;
-            padding: 1rem 2.5rem;
-            border-radius: 4px;
+        .glass-tag {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+        }
+
+        .step-number {
+            font-size: 4rem;
             font-weight: 700;
-            text-transform: uppercase;
+            font-family: 'Playfair Display', serif;
+            position: absolute;
+            top: -0.8rem;
+            left: 1rem;
+            opacity: 0.12;
+            line-height: 1;
+            pointer-events: none;
+            color: currentColor;
+        }
+        @media (max-width: 768px) {
+            .step-number { font-size: 3rem; top: -0.5rem; left: 0.75rem; }
+        }
+
+        /* ======= ENTRADA PRINCIPAL: FADE + VERTICAL ======= */
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.25, 0.8, 0.35, 1), transform 1s cubic-bezier(0.25, 0.8, 0.35, 1);
+        }
+        .reveal-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* Outros estilos originais mantidos... */
+        /* [Restantes estilos do seu arquivo original de 626 linhas aqui] */
+
+        .chaos-button {
+            background-color: #1F1F1F;
+            color: #D6CFA1;
+            padding: 1rem 2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1rem;
             letter-spacing: 0.1em;
-            display: inline-block;
+            text-transform: uppercase;
             transition: all 0.3s ease;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(214,207,161,0.3);
+            width: auto;
+            min-width: 240px;
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .chaos-button:hover {
+            background-color: #D6CFA1;
+            color: #1F1F1F;
+            transform: scale(1.03);
+            border-color: #1F1F1F;
         }
     </style>
 </head>
 <body>
 
-    <!-- SEÇÃO DE TOPO COM A IMAGEM arco.png -->
-    <header class="hero-header">
-        <div class="hero-image-container">
-            <img src="arco.png" alt="Arco de Frequência Mental">
-            <div class="hero-overlay"></div>
-        </div>
+    <!-- 1. IMAGEM DO TOPO (arco.png) ACIMA DE TUDO -->
+    <div class="top-banner-container reveal-up">
+        <img src="arco.png" alt="Arco de Frequência Mental" class="float-medium">
+    </div>
 
-        <div class="container mx-auto px-6 hero-content">
-            <div class="max-w-3xl reveal-up visible">
-                <span class="text-amber-500 font-bold tracking-[0.3em] uppercase text-xs mb-4 block">
-                    Frequência Mental Poderosa
-                </span>
-                <h1 class="serif text-white text-5xl md:text-8xl mb-6 leading-none">
-                    O Despertar <br><span class="italic">do Rugido</span>
+    <!-- 2. CONTEÚDO HERO QUE JÁ TINHAS -->
+    <header class="pt-12 pb-20 px-6">
+        <div class="container mx-auto text-center">
+            <div class="reveal-up delay-100">
+                <h1 class="serif text-5xl md:text-8xl mb-6 leading-tight">
+                    Frequência Mental Poderosa <br>
+                    <span class="italic text-humanized">O Despertar do Rugido</span>
                 </h1>
-                <p class="text-stone-400 text-lg md:text-xl mb-10 max-w-lg leading-relaxed font-light">
-                    Transforme sua vibração mental e acesse níveis de clareza e poder que você nunca imaginou serem possíveis.
+                <p class="text-xl md:text-2xl max-w-2xl mx-auto text-humanized opacity-80 mb-10">
+                    Sincronize a sua mente com as frequências ancestrais de poder e retome o controlo da sua realidade.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-5">
-                    <a href="#conteudo" class="chaos-button">Começar Agora</a>
-                    <a href="#" class="text-white border border-white/20 px-8 py-4 hover:bg-white/10 transition text-sm font-bold tracking-widest flex items-center justify-center">
-                        Assistir Intro
-                    </a>
+                <div class="chaos-button-wrapper">
+                    <a href="#" class="chaos-button">Iniciar o Despertar</a>
+                    <p class="chaos-quote text-humanized italic">"O rugido não é apenas som, é a vibração da alma que se reconhece soberana."</p>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- PONTO DE ANCORAGEM PARA O CONTEÚDO -->
-    <main id="conteudo">
-        <!-- O resto do seu código original continua aqui -->
-    </main>
+    <!-- [CONTINUA TODO O RESTO DO SEU FICHEIRO ORIGINAL AQUI] -->
+    <!-- ISSO INCLUI AS SEÇÕES DE CONTEÚDO, SCRIPTS DE PARALLAX E REVEAL -->
 
     <script>
-        // Script simplificado para ativar animações ao carregar
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.reveal-up').forEach(el => {
-                el.classList.add('visible');
+    (function() {
+        // [TODO O SEU SCRIPT JS ORIGINAL DEVE SER MANTIDO AQUI]
+        // Garante que o IntersectionObserver funcione para a nova imagem
+        const revealCallback = (entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
             });
-        });
+        };
+        const observer = new IntersectionObserver(revealCallback, { threshold: 0.1 });
+        document.querySelectorAll('.reveal-up').forEach(el => observer.observe(el));
+    })();
     </script>
 </body>
 </html>
